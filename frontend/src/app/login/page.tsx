@@ -48,7 +48,7 @@ export default function LoginPage() {
         setSuccess("");
         try {
             const supabase = createClient();
-            const { data, error: authError } = await supabase.auth.signInWithPassword({
+            const { error: authError } = await supabase.auth.signInWithPassword({
                 email: email.trim(),
                 password,
             });
@@ -57,13 +57,18 @@ export default function LoginPage() {
                 return;
             }
 
-            // ── Role-exclusivity check ──
-            const storedRole = data.user?.user_metadata?.role as Role | undefined;
-            if (storedRole && storedRole !== role) {
-                // Sign them back out immediately
+            // ── Role-exclusivity check (fresh server read, not stale JWT) ──
+            const { data: { user: freshUser } } = await supabase.auth.getUser();
+            const storedRole = freshUser?.user_metadata?.role as Role | undefined;
+
+            if (!storedRole) {
+                // Account has no role yet — save the selected role now
+                // (user proved account ownership with correct password)
+                await supabase.auth.updateUser({ data: { role } });
+            } else if (storedRole !== role) {
+                // Role mismatch — sign out immediately
                 await supabase.auth.signOut();
                 const expected = storedRole === "doctor" ? "Doctor" : "Patient";
-                const selected = role === "doctor" ? "Doctor" : "Patient";
                 setError(
                     `This email is registered as a ${expected} account. ` +
                     `Please select "${expected}" above to sign in.`
@@ -73,7 +78,8 @@ export default function LoginPage() {
 
             setSuccess("Login successful! Redirecting…");
             setTimeout(() => {
-                router.push("/dashboard");
+                const destination = role === "doctor" ? "/doctor/dashboard" : "/patient/dashboard";
+                router.push(destination);
                 router.refresh();
             }, 500);
         } catch {

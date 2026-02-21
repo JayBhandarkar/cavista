@@ -37,10 +37,12 @@ export async function GET(request: Request) {
     }
 
     // First-time OAuth user — no role set yet → send to role selection
-    const role = data.user.user_metadata?.role;
+    const role = data.user.user_metadata?.role as string | undefined;
     if (!role) {
         return NextResponse.redirect(`${origin}/auth/role-select`);
     }
 
-    return NextResponse.redirect(`${origin}${next}`);
+    // Route to role-specific dashboard
+    const destination = role === "doctor" ? "/doctor/dashboard" : "/patient/dashboard";
+    return NextResponse.redirect(`${origin}${destination}`);
 }

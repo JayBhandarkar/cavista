@@ -81,7 +81,8 @@ export default function SignUpPage() {
             } else {
                 setSuccess("Account created! Redirecting…");
                 setTimeout(() => {
-                    router.push("/dashboard");
+                    const destination = role === "doctor" ? "/doctor/dashboard" : "/patient/dashboard";
+                    router.push(destination);
                     router.refresh();
                 }, 800);
             }

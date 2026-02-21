@@ -23,7 +23,8 @@ export default function RoleSelectPage() {
             if (updateError) {
                 setError(updateError.message);
             } else {
-                router.push("/dashboard");
+                const destination = role === "doctor" ? "/doctor/dashboard" : "/patient/dashboard";
+                router.push(destination);
                 router.refresh();
             }
         } catch {
