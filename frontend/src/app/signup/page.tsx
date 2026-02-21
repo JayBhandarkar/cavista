@@ -126,7 +126,7 @@ export default function SignUpPage() {
                             <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
                         </svg>
                     </div>
-                    <h1>Cavista</h1>
+                    <h1>Mediq</h1>
                     <p>Smart EMR &amp; Diagnostic Assistant</p>
 
                     <div className="auth-features">
@@ -163,7 +163,7 @@ export default function SignUpPage() {
                 <div className="auth-form-container">
                     <div className="auth-form-header">
                         <h2>Create an account</h2>
-                        <p>Get started with Cavista EMR today</p>
+                        <p>Get started with Mediq EMR today</p>
                     </div>
 
                     {/* Role toggle */}

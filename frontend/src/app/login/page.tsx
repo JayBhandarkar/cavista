@@ -105,7 +105,7 @@ export default function LoginPage() {
                             <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
                         </svg>
                     </div>
-                    <h1>Cavista</h1>
+                    <h1>Mediq</h1>
                     <p>Smart EMR &amp; Diagnostic Assistant</p>
 
                     <div className="auth-features">

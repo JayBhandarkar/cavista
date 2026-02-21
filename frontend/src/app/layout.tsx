@@ -9,7 +9,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Cavista — Smart EMR & Diagnostic Assistant",
+  title: "Mediq — Smart EMR & Diagnostic Assistant",
   description: "AI-powered EMR platform for healthcare professionals",
 };
 

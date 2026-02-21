@@ -1,6 +1,12 @@
 "use client";
 
+import { useAuth } from "@/components/AuthProvider";
+
 export default function TopBar() {
+    const { user } = useAuth();
+    const displayName = user?.user_metadata?.full_name || user?.email?.split("@")[0] || "User";
+    const initials = displayName.substring(0, 2).toUpperCase();
+
     return (
         <header className="topbar">
             {/* Search */}
@@ -36,10 +42,9 @@ export default function TopBar() {
 
                 {/* Profile */}
                 <div className="topbar-profile">
-                    <div className="topbar-profile-avatar">DR</div>
+                    <div className="topbar-profile-avatar">{initials}</div>
                     <div className="topbar-profile-info">
-                        <div className="name">Dr. Rajesh Patel</div>
-                        <div className="role">General Physician</div>
+                        <div className="name">{displayName}</div>
                     </div>
                 </div>
             </div>
